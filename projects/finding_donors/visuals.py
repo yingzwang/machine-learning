@@ -11,6 +11,7 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 
 import matplotlib.pyplot as pl
 import matplotlib.patches as mpatches
+import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 from time import time
@@ -58,13 +59,16 @@ def evaluate(results, accuracy, f1):
       - accuracy: The score for the naive predictor
       - f1: The score for the naive predictor
     """
-  
+    # Number of classifiers
+    n_clfs = len(results.keys())
+
     # Create figure
-    fig, ax = pl.subplots(2, 3, figsize = (11,7))
+    fig, ax = pl.subplots(2, 3, figsize = (14,5))
 
     # Constants
-    bar_width = 0.3
-    colors = ['#A00000','#00A0A0','#00A000']
+    bar_width = 0.8 / n_clfs
+    # colors = ['#A00000','#00A0A0','#00A000']
+    colors = cm.rainbow(np.linspace(0, 1, n_clfs))
     
     # Super loop to plot four panels of data
     for k, learner in enumerate(results.keys()):
@@ -110,14 +114,14 @@ def evaluate(results, accuracy, f1):
     patches = []
     for i, learner in enumerate(results.keys()):
         patches.append(mpatches.Patch(color = colors[i], label = learner))
-    pl.legend(handles = patches, bbox_to_anchor = (-.80, 2.53), \
-               loc = 'upper center', borderaxespad = 0., ncol = 3, fontsize = 'x-large')
-    
+    #     pl.legend(handles = patches, bbox_to_anchor = (-.80, 2.53), 
+    #               loc = 'upper center', borderaxespad = 0., ncol = 3, fontsize = 'x-large')
+    pl.legend(handles = patches, bbox_to_anchor = (1, 0.5))
+
     # Aesthetics
     pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 1.10)
     pl.tight_layout()
     pl.show()
-    
 
 def feature_plot(importances, X_train, y_train):
     
@@ -127,7 +131,7 @@ def feature_plot(importances, X_train, y_train):
     values = importances[indices][:5]
 
     # Creat the plot
-    fig = pl.figure(figsize = (9,5))
+    fig = pl.figure(figsize = (12,5))
     pl.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
     pl.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
           label = "Feature Weight")
