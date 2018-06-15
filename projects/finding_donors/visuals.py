@@ -9,7 +9,7 @@ from IPython import get_ipython
 get_ipython().run_line_magic('matplotlib', 'inline')
 ###########################################
 
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.cm as cm
 import numpy as np
@@ -22,14 +22,14 @@ def distribution(data, transformed = False):
     """
     Visualization code for displaying skewed distributions of features
     """
-    
+
     # Create figure
-    fig = pl.figure(figsize = (11,5));
+    fig = plt.figure(figsize = (11,5));
 
     # Skewed feature plotting
     for i, feature in enumerate(['capital-gain','capital-loss']):
         ax = fig.add_subplot(1, 2, i+1)
-        ax.hist(data[feature], bins = 25, color = '#00A0A0')
+        ax.hist(data[feature], bins = 25, color = '#00A0A0', edgecolor = 'k')
         ax.set_title("'%s' Feature Distribution"%(feature), fontsize = 14)
         ax.set_xlabel("Value")
         ax.set_ylabel("Number of Records")
@@ -48,7 +48,7 @@ def distribution(data, transformed = False):
     fig.tight_layout()
     fig.show()
 
-
+    
 def evaluate(results, accuracy, f1):
     """
     Visualization code to display results of various learners.
@@ -63,7 +63,7 @@ def evaluate(results, accuracy, f1):
     n_clfs = len(results.keys())
 
     # Create figure
-    fig, ax = pl.subplots(2, 3, figsize = (14,5))
+    fig, ax = plt.subplots(2, 3, figsize = (14,5))
 
     # Constants
     bar_width = 0.8 / n_clfs
@@ -114,14 +114,14 @@ def evaluate(results, accuracy, f1):
     patches = []
     for i, learner in enumerate(results.keys()):
         patches.append(mpatches.Patch(color = colors[i], label = learner))
-    #     pl.legend(handles = patches, bbox_to_anchor = (-.80, 2.53), 
+    #     plt.legend(handles = patches, bbox_to_anchor = (-.80, 2.53), 
     #               loc = 'upper center', borderaxespad = 0., ncol = 3, fontsize = 'x-large')
-    pl.legend(handles = patches, bbox_to_anchor = (1, 0.5))
+    plt.legend(handles = patches, bbox_to_anchor = (1, 0.5))
 
     # Aesthetics
-    pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 1.10)
-    pl.tight_layout()
-    pl.show()
+    plt.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 1.10)
+    plt.tight_layout()
+    plt.show()
 
 def feature_plot(importances, X_train, y_train):
     
@@ -131,17 +131,17 @@ def feature_plot(importances, X_train, y_train):
     values = importances[indices][:5]
 
     # Creat the plot
-    fig = pl.figure(figsize = (12,5))
-    pl.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
-    pl.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
+    fig = plt.figure(figsize = (12,5))
+    plt.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
+    plt.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
           label = "Feature Weight")
-    pl.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
+    plt.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
           label = "Cumulative Feature Weight")
-    pl.xticks(np.arange(5), columns)
-    pl.xlim((-0.5, 4.5))
-    pl.ylabel("Weight", fontsize = 12)
-    pl.xlabel("Feature", fontsize = 12)
+    plt.xticks(np.arange(5), columns)
+    plt.xlim((-0.5, 4.5))
+    plt.ylabel("Weight", fontsize = 12)
+    plt.xlabel("Feature", fontsize = 12)
     
-    pl.legend(loc = 'upper center')
-    pl.tight_layout()
-    pl.show()  
+    plt.legend(loc = 'upper center')
+    plt.tight_layout()
+    plt.show()  
