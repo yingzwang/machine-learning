@@ -76,7 +76,7 @@ def evaluate(results, accuracy, f1):
             for i in np.arange(3):
                 
                 # Creative plot code
-                ax[j//3, j%3].bar(i+k*bar_width, results[learner][i][metric], width = bar_width, color = colors[k])
+                ax[j//3, j%3].bar(i+k*bar_width, results[learner][i][metric], width = bar_width, color = colors[k],  edgecolor='k')
                 ax[j//3, j%3].set_xticks([0.45, 1.45, 2.45])
                 ax[j//3, j%3].set_xticklabels(["1%", "10%", "100%"])
                 ax[j//3, j%3].set_xlabel("Training Set Size")
@@ -133,10 +133,10 @@ def feature_plot(importances, X_train, y_train):
     # Creat the plot
     fig = plt.figure(figsize = (12,5))
     plt.title("Normalized Weights for First Five Most Predictive Features", fontsize = 16)
-    plt.bar(np.arange(5), values, width = 0.6, align="center", color = '#00A000', \
-          label = "Feature Weight")
-    plt.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0', \
-          label = "Cumulative Feature Weight")
+    plt.bar(np.arange(5), values, width = 0.4, align="center", color = '#00A000', edgecolor='k',
+            label = "Feature Weight")
+    plt.bar(np.arange(5) - 0.3, np.cumsum(values), width = 0.2, align = "center", color = '#00A0A0',
+            label = "Cumulative Feature Weight")
     plt.xticks(np.arange(5), columns)
     plt.xlim((-0.5, 4.5))
     plt.ylabel("Weight", fontsize = 12)
